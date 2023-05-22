@@ -14,10 +14,10 @@ namespace HW4.Repository
 {
     public class Userservice : IUserService
     {
+        List<Users> users = new List<Users>();
         public string filePath = "C:\\Users\\DeveloperPC\\Source\\Repos\\MK97_HamidrezaRostaminezhad_HW4\\HW4\\Files\\New Microsoft Excel Worksheet.csv";
         public bool AddUser(Users user)
-        {
-            List<Users> users = new List<Users>();
+        {            
             users = GetAllUser();
             var serarchuser = from  a in users
                               where a.Email == user.Email
@@ -37,7 +37,22 @@ namespace HW4.Repository
 
         public bool DeleteUser(Users user)
         {
-            throw new NotImplementedException();
+            users = GetAllUser();
+            var serarchuser = from a in users
+                              where a.Id == user.Id
+                              select a.Id;
+            if (serarchuser!= null)
+            {
+                List<Users> tempUsers = new List<Users>();
+                foreach (Users item in users)
+                {
+                    if(item.Id != user.Id)
+                        tempUsers.Add(item);
+                }
+                SaveOnCsv(tempUsers);
+                return true;
+            }
+            return false;
         }
 
         public List<Users> GetAllUser()
@@ -57,7 +72,26 @@ namespace HW4.Repository
 
         public bool UpdateUser(Users user)
         {
-            throw new NotImplementedException();
+            users = GetAllUser();
+            var serarchuser = from a in users
+                              where a.Id == user.Id
+                              select a.Id;
+            if (serarchuser != null)
+            {
+                List<Users> tempUsers = new List<Users>();
+                foreach (Users item in users)
+                {
+                    if (item.Id != user.Id)
+                        tempUsers.Add(item);
+                    else
+                    {
+                        tempUsers.Add(user);
+                    }
+                }
+                SaveOnCsv(tempUsers);
+                return true;
+            }
+            return false;
         }
         public bool SaveOnCsv(List<Users> users)
         {
