@@ -17,7 +17,6 @@ namespace HW4.View
             Console.WriteLine("3 - to delete user");
             Console.WriteLine("4 - to update profile user");
 
-
         }
     }
 }

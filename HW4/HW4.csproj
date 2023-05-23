@@ -73,7 +73,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Userservice.cs" />
-    <Compile Include="View\UserMenu.cs" />
+    <Compile Include="Views\UserMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
