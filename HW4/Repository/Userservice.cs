@@ -2,6 +2,7 @@
 using HW4.Abstracts;
 using HW4.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -22,7 +23,8 @@ namespace HW4.Repository
             var serarchuser = from  a in users
                               where a.Email == user.Email
                               select a.Email ;
-            if (serarchuser != null)
+            user.Id = users.Max(r => r.Id);
+            if (serarchuser == null)
             {
                 users.Add(user);
                 SaveOnCsv(users);
