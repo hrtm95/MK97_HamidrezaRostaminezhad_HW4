@@ -2,6 +2,7 @@
 using HW4.Abstracts;
 using HW4.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -14,15 +15,16 @@ namespace HW4.Repository
 {
     public class Userservice : IUserService
     {
-        List<Users> users = new List<Users>();
         public string filePath = "C:\\Users\\DeveloperPC\\Source\\Repos\\MK97_HamidrezaRostaminezhad_HW4\\HW4\\Files\\New Microsoft Excel Worksheet.csv";
         public bool AddUser(Users user)
-        {            
+        {
+            List<Users> users = new List<Users>();
             users = GetAllUser();
             var serarchuser = from  a in users
                               where a.Email == user.Email
                               select a.Email ;
-            if (serarchuser != null)
+            user.Id = users.Max(r => r.Id);
+            if (serarchuser == null)
             {
                 users.Add(user);
                 SaveOnCsv(users);
@@ -37,22 +39,7 @@ namespace HW4.Repository
 
         public bool DeleteUser(Users user)
         {
-            users = GetAllUser();
-            var serarchuser = from a in users
-                              where a.Id == user.Id
-                              select a.Id;
-            if (serarchuser!= null)
-            {
-                List<Users> tempUsers = new List<Users>();
-                foreach (Users item in users)
-                {
-                    if(item.Id != user.Id)
-                        tempUsers.Add(item);
-                }
-                SaveOnCsv(tempUsers);
-                return true;
-            }
-            return false;
+            throw new NotImplementedException();
         }
 
         public List<Users> GetAllUser()
@@ -72,26 +59,7 @@ namespace HW4.Repository
 
         public bool UpdateUser(Users user)
         {
-            users = GetAllUser();
-            var serarchuser = from a in users
-                              where a.Id == user.Id
-                              select a.Id;
-            if (serarchuser != null)
-            {
-                List<Users> tempUsers = new List<Users>();
-                foreach (Users item in users)
-                {
-                    if (item.Id != user.Id)
-                        tempUsers.Add(item);
-                    else
-                    {
-                        tempUsers.Add(user);
-                    }
-                }
-                SaveOnCsv(tempUsers);
-                return true;
-            }
-            return false;
+            throw new NotImplementedException();
         }
         public bool SaveOnCsv(List<Users> users)
         {
