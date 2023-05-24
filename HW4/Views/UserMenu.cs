@@ -18,5 +18,20 @@ namespace HW4.View
             Console.WriteLine("4 - to update profile user");
 
         }
+        public static void loginOrRegester()
+        {
+            Console.Clear();
+            Console.WriteLine("Plese Enter 1 to login:");
+            Console.WriteLine("Plese Enter 2 for Rigester:");
+        }
+        public static void loginGetUsername()
+        {
+            Console.Clear();
+            Console.WriteLine("Enter your Email:");
+        }
+        public static void loginGetPassword()
+        {
+            Console.WriteLine("Enter your Password:");
+        }
     }
 }
