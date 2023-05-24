@@ -86,8 +86,13 @@ namespace HW4
                                                 string brithdate = Console.ReadLine();
                                                 if (Validations.CheckDateTime(brithdate))
                                                 {
-                                                    adduser.BirthDate = DateTime.Parse(brithdate);
-                                                    break;
+                                                    if (DateTime.Parse(brithdate) < DateTime.Now)
+                                                    { 
+                                                        adduser.BirthDate = DateTime.Parse(brithdate);
+                                                        break;
+                                                    }
+                                                    else { Console.WriteLine("you cant enter date bigest today"); }
+                                                    
                                                 }
                                                 else
                                                 {
@@ -152,8 +157,9 @@ namespace HW4
                                                             {
                                                                 Console.WriteLine("ID not found!");
                                                             }
-                                                            break;
                                                             UserMenu.WatingforContinue();
+                                                            break;
+                                                            
                                                         }
                                                         else
                                                         {
@@ -212,8 +218,12 @@ namespace HW4
                                                                 string brithdate = Console.ReadLine();
                                                                 if (Validations.CheckDateTime(brithdate))
                                                                 {
-                                                                    updateuser.BirthDate = DateTime.Parse(brithdate);
-                                                                    break;
+                                                                    if (DateTime.Parse(brithdate) < DateTime.Now)
+                                                                    {
+                                                                        updateuser.BirthDate = DateTime.Parse(brithdate);
+                                                                        break;
+                                                                    }
+                                                                    else { Console.WriteLine("you cant enter date bigest today"); }
                                                                 }
                                                                 else
                                                                 {
@@ -290,7 +300,6 @@ namespace HW4
                             else
                             {
                                 throw new LoginError();
-                                UserMenu.WatingforContinue();
                             }
                         }
                         catch (Exception ex)
