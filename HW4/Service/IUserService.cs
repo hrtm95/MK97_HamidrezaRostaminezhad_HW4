@@ -12,6 +12,6 @@ namespace HW4.Abstracts
         List<Users> GetAllUser();
         bool AddUser(Users user);
         bool UpdateUser(Users user);
-        bool DeleteUser(Users user);
+        bool DeleteUser(int Id);
     }
 }
