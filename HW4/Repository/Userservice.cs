@@ -57,6 +57,14 @@ namespace HW4.Repository
             
         }
 
+        public Users LoginUser(string Email,string password)
+        {
+            List<Users> users = new List<Users>();
+            users = GetAllUser();
+            Users user = users.FirstOrDefault(x => x.Email == Email && x.Password == password);
+            return user;
+        }
+
         public bool UpdateUser(Users user)
         {
             throw new NotImplementedException();
