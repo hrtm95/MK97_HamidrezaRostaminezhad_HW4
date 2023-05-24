@@ -70,11 +70,12 @@
   <ItemGroup>
     <Compile Include="DataBase\DataPath.cs" />
     <Compile Include="Repository\Validations.cs" />
+    <Compile Include="Service\Exceptions\NullFileError.cs" />
     <Compile Include="Service\IUserService.cs" />
     <Compile Include="Entitys\Users.cs" />
     <Compile Include="Views\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Exceptions\CustomExeption.cs" />
+    <Compile Include="Service\Exceptions\LoginError.cs" />
     <Compile Include="Repository\Userservice.cs" />
     <Compile Include="Views\UserMenu.cs" />
   </ItemGroup>
