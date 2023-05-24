@@ -33,5 +33,10 @@ namespace HW4.View
         {
             Console.WriteLine("Enter your Password:");
         }
+        public static void WatingforContinue()
+        {
+            Console.WriteLine("press any kye to continue:");
+            Console.ReadKey();
+        }
     }
 }
