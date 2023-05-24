@@ -38,7 +38,27 @@ namespace HW4.Repository
 
         public bool DeleteUser(Users user)
         {
-            throw new NotImplementedException();
+            List<Users> users = new List<Users>();
+            List<Users> tempusers = new List<Users>();
+            users = GetAllUser();
+            var serarchuser = users.FirstOrDefault(serche => user.Id == serche.Id);
+            if (serarchuser != null)
+            {
+                foreach (Users Tuser in users)
+                {
+                    if (Tuser.Id != serarchuser.Id)
+                        tempusers.Add(Tuser);
+                }
+                SaveOnCsv(tempusers);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+            return false;
         }
 
         public List<Users> GetAllUser()
