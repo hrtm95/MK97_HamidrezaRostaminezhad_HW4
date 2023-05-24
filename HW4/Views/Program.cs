@@ -33,48 +33,55 @@ namespace HW4
                         if (user != null)
                         {
                             UserMenu.Arival(user.Name);
-                            string UserFanc = Console.ReadLine();
-                            int UserFancNum;
-                            if (int.TryParse(UserFanc, out UserFancNum))
+                            while (true)
                             {
-                                if (UserFancNum == 1)
+                                string UserFanc = Console.ReadLine();
+                                int UserFancNum;
+                                if (int.TryParse(UserFanc, out UserFancNum))
                                 {
-                                    List<Users> users = userservice.GetAllUser();
-                                    if (users != null)
+                                    if (UserFancNum == 1)
                                     {
-                                        foreach (Users user1 in users)
+                                        List<Users> users = userservice.GetAllUser();
+                                        if (users != null)
                                         {
-                                            Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                            Console.Clear();
+                                            foreach (Users user1 in users)
+                                            {
+                                                Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                            }
+                                            UserMenu.WatingforContinue();
                                         }
-                                        UserMenu.WatingforContinue();
+                                        else
+                                        {
+                                            //null file eroor
+                                        }
+                                    }
+                                    else if (UserFancNum == 2)
+                                    {
+
+                                    }
+                                    else if (UserFancNum == 3)
+                                    {
+
+                                    }
+                                    else if (UserFancNum == 4)
+                                    {
+
+                                    }
+                                    else if (UserFancNum == 5)
+                                    {
+                                        break;
                                     }
                                     else
                                     {
-                                        //null file eroor
+                                        //erro func 
                                     }
-                                }
-                                else if (UserFancNum == 2)
-                                {
-
-                                }
-                                else if (UserFancNum == 3)
-                                {
-
-                                }
-                                else if (UserFancNum == 4)
-                                {
-
                                 }
                                 else
                                 {
-                                    //erro func 
+                                    //error func
                                 }
                             }
-                            else
-                            {
-                                //error func
-                            }
-
                         }
                         if (LoginN == 2)
                         {
