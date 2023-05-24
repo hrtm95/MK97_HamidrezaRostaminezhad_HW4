@@ -86,7 +86,27 @@ namespace HW4.Repository
 
         public bool UpdateUser(Users user)
         {
-            throw new NotImplementedException();
+            List<Users> users = new List<Users>();
+            List<Users> tempusers = new List<Users>();
+            users = GetAllUser();
+            var serarchuser = users.FirstOrDefault(serche => user.Id == serche.Id);
+            if (serarchuser != null)
+            {
+                foreach (Users upuser in users)
+                {
+                    if (upuser.Id == serarchuser.Id)
+                    {
+                        tempusers.Add(user);
+                    }
+                    else
+                    {
+                        tempusers.Add(upuser);
+                    }
+                }
+                SaveOnCsv(tempusers);
+                return true;
+            }
+            return false;
         }
         public bool SaveOnCsv(List<Users> users)
         {

@@ -162,6 +162,90 @@ namespace HW4
                                     }
                                     else if (UserFancNum == 4)
                                     {
+                                        List<Users> users = userservice.GetAllUser();
+                                        Users updateuser = new Users();
+                                        if (users != null)
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("Enter ID to update user:");
+                                            foreach (Users user1 in users)
+                                            {
+                                                Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                            }
+                                            while (true)
+                                            {
+                                                int updatetId;
+                                                if (int.TryParse(Console.ReadLine(), out updatetId))
+                                                {
+                                                    updateuser.Id = updatetId;
+                                                    Console.Clear();
+                                                    Console.WriteLine("Enter Email of user");
+                                                    updateuser.Email = Console.ReadLine();
+                                                    Console.WriteLine("Enter Name of user");
+                                                    updateuser.Name = Console.ReadLine();
+                                                    Console.WriteLine("Enter LastName of user");
+                                                    updateuser.Lastname = Console.ReadLine();
+                                                    Console.WriteLine("Enter password of user");
+                                                    updateuser.Password = Console.ReadLine();
+                                                    Console.WriteLine("Enter Mobile of user");
+                                                    updateuser.Mobile = Console.ReadLine();
+                                                    Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
+                                                    while (true)
+                                                    {
+                                                        string brithdate = Console.ReadLine();
+                                                        if (Validations.CheckDateTime(brithdate))
+                                                        {
+                                                            updateuser.BirthDate = DateTime.Parse(brithdate);
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
+                                                        }
+
+                                                    }
+                                                    Console.WriteLine("Enter Role of user \n1 = admin\t 2 = user :");
+                                                    while (true)
+                                                    {
+                                                        int role;
+                                                        if (int.TryParse(Console.ReadLine(), out role) && (role == 1 || role == 2))
+                                                        {
+                                                            updateuser.RoleId = role;
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Enter true Role Id (1 = admin\t 2 = user):");
+                                                        }
+                                                    }
+                                                    if (userservice.UpdateUser(updateuser))
+                                                    {
+                                                        Console.WriteLine("Update is sucsess!!");
+                                                        UserMenu.WatingforContinue();
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("The ID not found!! ");
+                                                        UserMenu.WatingforContinue();
+                                                    }
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("number isn't valid!\n");
+                                                    Console.WriteLine("Enter valid id number:");
+                                                }
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //null file eroor
+                                        }
 
                                     }
                                     else if (UserFancNum == 5)
