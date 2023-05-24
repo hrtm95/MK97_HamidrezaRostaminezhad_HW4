@@ -33,7 +33,7 @@ namespace HW4
                         Users user = userservice.LoginUser(Email, Password);
                         if (user != null)
                         {
-                            
+
                             while (true)
                             {
                                 UserMenu.Arival(user.Name);
@@ -73,7 +73,7 @@ namespace HW4
                                         Console.WriteLine("Enter Mobile of user");
                                         adduser.Mobile = Console.ReadLine();
                                         Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
-                                        while(true)
+                                        while (true)
                                         {
                                             string brithdate = Console.ReadLine();
                                             if (Validations.CheckDateTime(brithdate))
@@ -84,7 +84,7 @@ namespace HW4
                                             else
                                             {
                                                 Console.Clear();
-                                               Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
+                                                Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
                                             }
 
                                         }
@@ -113,12 +113,52 @@ namespace HW4
                                             Console.WriteLine("The email is duplicate!! ");
                                             UserMenu.WatingforContinue();
                                         }
-                                        
+
 
                                     }
                                     else if (UserFancNum == 3)
                                     {
+                                        List<Users> users = userservice.GetAllUser();
+                                        if (users != null)
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("Enter id to delete user:");
+                                            foreach (Users user1 in users)
+                                            {
+                                                Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                            }
+                                            while (true)
+                                            {
+                                                int deletId;
+                                                if (int.TryParse(Console.ReadLine(), out deletId))
+                                                {
+                                                    if (userservice.DeleteUser(deletId))
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("Delete is sucsessfull");
+                                                    }
 
+                                                    else
+                                                    {
+                                                        Console.WriteLine("ID not found!");
+                                                    }
+                                                    break;
+                                                    UserMenu.WatingforContinue();
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("number isn't valid!\n");
+                                                    Console.WriteLine("Enter valid number:");
+                                                }
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            //null file eroor
+                                        }
                                     }
                                     else if (UserFancNum == 4)
                                     {

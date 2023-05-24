@@ -36,12 +36,12 @@ namespace HW4.Repository
                 
         }
 
-        public bool DeleteUser(Users user)
+        public bool DeleteUser(int Id)
         {
             List<Users> users = new List<Users>();
             List<Users> tempusers = new List<Users>();
             users = GetAllUser();
-            var serarchuser = users.FirstOrDefault(serche => user.Id == serche.Id);
+            var serarchuser = users.FirstOrDefault(serche => Id == serche.Id);
             if (serarchuser != null)
             {
                 foreach (Users Tuser in users)
