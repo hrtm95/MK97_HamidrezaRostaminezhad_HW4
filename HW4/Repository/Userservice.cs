@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using HW4.Abstracts;
+using HW4.DataBase;
 using HW4.Models;
 using System;
 using System.Collections;
@@ -15,7 +16,7 @@ namespace HW4.Repository
 {
     public class Userservice : IUserService
     {
-        public string filePath = "C:\\Users\\DeveloperPC\\source\\repos\\MK97_HamidrezaRostaminezhad_HW4\\HW4\\DataBase\\New Microsoft Excel Worksheet.csv";
+        public string filePath = DataPath.PathFileUsers();
         public bool AddUser(Users user)
         {
             List<Users> users = new List<Users>();
