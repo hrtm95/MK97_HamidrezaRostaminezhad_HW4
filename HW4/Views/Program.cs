@@ -33,9 +33,10 @@ namespace HW4
                         Users user = userservice.LoginUser(Email, Password);
                         if (user != null)
                         {
-                            UserMenu.Arival(user.Name);
+                            
                             while (true)
                             {
+                                UserMenu.Arival(user.Name);
                                 string UserFanc = Console.ReadLine();
                                 int UserFancNum;
                                 if (int.TryParse(UserFanc, out UserFancNum))
@@ -59,6 +60,7 @@ namespace HW4
                                     }
                                     else if (UserFancNum == 2)
                                     {
+                                        Console.Clear();
                                         Users adduser = new Users();
                                         Console.WriteLine("Enter Email of user");
                                         adduser.Email = Console.ReadLine();
@@ -86,6 +88,32 @@ namespace HW4
                                             }
 
                                         }
+                                        Console.WriteLine("Enter Role of user \n1 = admin\t 2 = user :");
+                                        while (true)
+                                        {
+                                            int role;
+                                            if (int.TryParse(Console.ReadLine(), out role) && (role == 1 || role == 2))
+                                            {
+                                                adduser.RoleId = role;
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("Enter true Role Id (1 = admin\t 2 = user):");
+                                            }
+                                        }
+                                        if (userservice.AddUser(adduser))
+                                        {
+                                            Console.WriteLine("add user id sucsess!!");
+                                            UserMenu.WatingforContinue();
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("The email is duplicate!! ");
+                                            UserMenu.WatingforContinue();
+                                        }
+                                        
 
                                     }
                                     else if (UserFancNum == 3)

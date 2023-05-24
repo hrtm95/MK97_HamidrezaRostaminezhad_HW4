@@ -21,10 +21,8 @@ namespace HW4.Repository
         {
             List<Users> users = new List<Users>();
             users = GetAllUser();
-            var serarchuser = from  a in users
-                              where a.Email == user.Email
-                              select a.Email ;
-            user.Id = users.Max(r => r.Id);
+            var serarchuser = users.FirstOrDefault(serche => user.Email == serche.Email);
+            user.Id = users.Max(r => r.Id)+1;
             if (serarchuser == null)
             {
                 users.Add(user);
