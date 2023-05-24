@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\DataPath.cs" />
+    <Compile Include="Repository\Validations.cs" />
     <Compile Include="Service\IUserService.cs" />
     <Compile Include="Entitys\Users.cs" />
     <Compile Include="Views\Program.cs" />

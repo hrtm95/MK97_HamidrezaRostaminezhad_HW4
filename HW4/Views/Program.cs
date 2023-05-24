@@ -13,6 +13,7 @@ namespace HW4
     {
         static void Main(string[] args)
         {
+
             Userservice userservice = new Userservice();
             //this while is for exit from program 
             while (true)
@@ -58,6 +59,33 @@ namespace HW4
                                     }
                                     else if (UserFancNum == 2)
                                     {
+                                        Users adduser = new Users();
+                                        Console.WriteLine("Enter Email of user");
+                                        adduser.Email = Console.ReadLine();
+                                        Console.WriteLine("Enter Name of user");
+                                        adduser.Name = Console.ReadLine();
+                                        Console.WriteLine("Enter LastName of user");
+                                        adduser.Lastname = Console.ReadLine();
+                                        Console.WriteLine("Enter password of user");
+                                        adduser.Password = Console.ReadLine();
+                                        Console.WriteLine("Enter Mobile of user");
+                                        adduser.Mobile = Console.ReadLine();
+                                        Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
+                                        while(true)
+                                        {
+                                            string brithdate = Console.ReadLine();
+                                            if (Validations.CheckDateTime(brithdate))
+                                            {
+                                                adduser.BirthDate = DateTime.Parse(brithdate);
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                Console.Clear();
+                                               Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
+                                            }
+
+                                        }
 
                                     }
                                     else if (UserFancNum == 3)
