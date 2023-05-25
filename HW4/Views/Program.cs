@@ -15,7 +15,6 @@ namespace HW4
     {
         static void Main(string[] args)
         {
-
             Userservice userservice = new Userservice();
             //this while is for exit from program 
             while (true)
@@ -81,7 +80,22 @@ namespace HW4
                                                 Console.WriteLine("Enter password of user");
                                                 adduser.Password = Console.ReadLine();
                                                 Console.WriteLine("Enter Mobile of user");
-                                                adduser.Mobile = Console.ReadLine();
+                                                while (true)
+                                                {
+                                                    string Mobile = Console.ReadLine();
+                                                    if(Validations.IsValidPhone(Mobile))
+                                                    {
+                                                        adduser.Mobile = Mobile;
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.Clear() ;
+                                                        Console.WriteLine("Mobile is invalid try again:");
+                                                    }
+
+                                                }
+                                                
                                                 Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
                                                 while (true)
                                                 {
