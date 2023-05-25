@@ -25,264 +25,272 @@ namespace HW4
                 int LoginN;
                 if (int.TryParse(loginnumber, out LoginN))
                 {
-                    if (LoginN == 1)
+                    try
                     {
-                        try
+                        if (LoginN == 1)
                         {
-                            UserMenu.loginGetUsername();
-                            string Email = Console.ReadLine();
-                            UserMenu.loginGetPassword();
-                            string Password = Console.ReadLine();
-                            Users user = userservice.LoginUser(Email, Password);
-                            if (user != null)
+                            try
                             {
-
-                                while (true)
+                                UserMenu.loginGetUsername();
+                                string Email = Console.ReadLine();
+                                UserMenu.loginGetPassword();
+                                string Password = Console.ReadLine();
+                                Users user = userservice.LoginUser(Email, Password);
+                                if (user != null)
                                 {
-                                    UserMenu.Arival(user.Name);
-                                    string UserFanc = Console.ReadLine();
-                                    int UserFancNum;
-                                    if (int.TryParse(UserFanc, out UserFancNum))
+
+                                    while (true)
                                     {
-                                        if (UserFancNum == 1)
+                                        UserMenu.Arival(user.Name);
+                                        string UserFanc = Console.ReadLine();
+                                        int UserFancNum;
+                                        if (int.TryParse(UserFanc, out UserFancNum))
                                         {
-                                            try
+                                            if (UserFancNum == 1)
                                             {
-                                                List<Users> users = userservice.GetAllUser();
-                                                if (users != null)
+                                                try
                                                 {
-                                                    Console.Clear();
-                                                    foreach (Users user1 in users)
+                                                    List<Users> users = userservice.GetAllUser();
+                                                    if (users != null)
                                                     {
-                                                        Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                                        Console.Clear();
+                                                        foreach (Users user1 in users)
+                                                        {
+                                                            Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                                        }
+                                                        UserMenu.WatingforContinue();
                                                     }
+                                                    else
+                                                    {
+                                                        throw new NullFileError();
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                { Console.WriteLine(ex.Message); }
+                                            }
+                                            else if (UserFancNum == 2)
+                                            {
+                                                Console.Clear();
+                                                Users adduser = new Users();
+                                                Console.WriteLine("Enter Email of user");
+                                                adduser.Email = Console.ReadLine();
+                                                Console.WriteLine("Enter Name of user");
+                                                adduser.Name = Console.ReadLine();
+                                                Console.WriteLine("Enter LastName of user");
+                                                adduser.Lastname = Console.ReadLine();
+                                                Console.WriteLine("Enter password of user");
+                                                adduser.Password = Console.ReadLine();
+                                                Console.WriteLine("Enter Mobile of user");
+                                                adduser.Mobile = Console.ReadLine();
+                                                Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
+                                                while (true)
+                                                {
+                                                    string brithdate = Console.ReadLine();
+                                                    if (Validations.CheckDateTime(brithdate))
+                                                    {
+                                                        if (DateTime.Parse(brithdate) < DateTime.Now)
+                                                        {
+                                                            adduser.BirthDate = DateTime.Parse(brithdate);
+                                                            break;
+                                                        }
+                                                        else { Console.WriteLine("you cant enter date bigest today"); }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
+                                                    }
+
+                                                }
+                                                Console.WriteLine("Enter Role of user \n1 = admin\t 2 = user :");
+                                                while (true)
+                                                {
+                                                    int role;
+                                                    if (int.TryParse(Console.ReadLine(), out role) && (role == 1 || role == 2))
+                                                    {
+                                                        adduser.RoleId = role;
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("Enter true Role Id (1 = admin\t 2 = user):");
+                                                    }
+                                                }
+                                                if (userservice.AddUser(adduser))
+                                                {
+                                                    Console.WriteLine("add user id sucsess!!");
                                                     UserMenu.WatingforContinue();
                                                 }
                                                 else
                                                 {
-                                                    throw new NullFileError();
+                                                    Console.WriteLine("The email is duplicate!! ");
+                                                    UserMenu.WatingforContinue();
+                                                }
+
+
+                                            }
+                                            else if (UserFancNum == 3)
+                                            {
+                                                try
+                                                {
+                                                    List<Users> users = userservice.GetAllUser();
+                                                    if (users != null)
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("Enter id to delete user:");
+                                                        foreach (Users user1 in users)
+                                                        {
+                                                            Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                                        }
+                                                        while (true)
+                                                        {
+                                                            int deletId;
+                                                            if (int.TryParse(Console.ReadLine(), out deletId))
+                                                            {
+                                                                if (userservice.DeleteUser(deletId))
+                                                                {
+                                                                    Console.Clear();
+                                                                    Console.WriteLine("Delete is sucsessfull");
+                                                                }
+
+                                                                else
+                                                                {
+                                                                    Console.WriteLine("ID not found!");
+                                                                }
+                                                                UserMenu.WatingforContinue();
+                                                                break;
+
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.Clear();
+                                                                Console.WriteLine("number isn't valid!\n");
+                                                                Console.WriteLine("Enter valid number:");
+                                                            }
+
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        throw new NullFileError();
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine(ex.Message);
                                                 }
                                             }
-                                            catch (Exception ex)
-                                            { Console.WriteLine(ex.Message); }
-                                        }
-                                        else if (UserFancNum == 2)
-                                        {
-                                            Console.Clear();
-                                            Users adduser = new Users();
-                                            Console.WriteLine("Enter Email of user");
-                                            adduser.Email = Console.ReadLine();
-                                            Console.WriteLine("Enter Name of user");
-                                            adduser.Name = Console.ReadLine();
-                                            Console.WriteLine("Enter LastName of user");
-                                            adduser.Lastname = Console.ReadLine();
-                                            Console.WriteLine("Enter password of user");
-                                            adduser.Password = Console.ReadLine();
-                                            Console.WriteLine("Enter Mobile of user");
-                                            adduser.Mobile = Console.ReadLine();
-                                            Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
-                                            while (true)
+                                            else if (UserFancNum == 4)
                                             {
-                                                string brithdate = Console.ReadLine();
-                                                if (Validations.CheckDateTime(brithdate))
+                                                List<Users> users = userservice.GetAllUser();
+                                                Users updateuser = new Users();
+                                                try
                                                 {
-                                                    if (DateTime.Parse(brithdate) < DateTime.Now)
-                                                    { 
-                                                        adduser.BirthDate = DateTime.Parse(brithdate);
-                                                        break;
+                                                    if (users != null)
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine("Enter ID to update user:");
+                                                        foreach (Users user1 in users)
+                                                        {
+                                                            Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
+                                                        }
+                                                        while (true)
+                                                        {
+                                                            int updatetId;
+                                                            if (int.TryParse(Console.ReadLine(), out updatetId))
+                                                            {
+                                                                updateuser.Id = updatetId;
+                                                                Console.Clear();
+                                                                Console.WriteLine("Enter Email of user");
+                                                                updateuser.Email = Console.ReadLine();
+                                                                Console.WriteLine("Enter Name of user");
+                                                                updateuser.Name = Console.ReadLine();
+                                                                Console.WriteLine("Enter LastName of user");
+                                                                updateuser.Lastname = Console.ReadLine();
+                                                                Console.WriteLine("Enter password of user");
+                                                                updateuser.Password = Console.ReadLine();
+                                                                Console.WriteLine("Enter Mobile of user");
+                                                                updateuser.Mobile = Console.ReadLine();
+                                                                Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
+                                                                while (true)
+                                                                {
+                                                                    string brithdate = Console.ReadLine();
+                                                                    if (Validations.CheckDateTime(brithdate))
+                                                                    {
+                                                                        if (DateTime.Parse(brithdate) < DateTime.Now)
+                                                                        {
+                                                                            updateuser.BirthDate = DateTime.Parse(brithdate);
+                                                                            break;
+                                                                        }
+                                                                        else { Console.WriteLine("you cant enter date bigest today"); }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        Console.Clear();
+                                                                        Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
+                                                                    }
+
+                                                                }
+                                                                Console.WriteLine("Enter Role of user \n1 = admin\t 2 = user :");
+                                                                while (true)
+                                                                {
+                                                                    int role;
+                                                                    if (int.TryParse(Console.ReadLine(), out role) && (role == 1 || role == 2))
+                                                                    {
+                                                                        updateuser.RoleId = role;
+                                                                        break;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        Console.Clear();
+                                                                        Console.WriteLine("Enter true Role Id (1 = admin\t 2 = user):");
+                                                                    }
+                                                                }
+                                                                if (userservice.UpdateUser(updateuser))
+                                                                {
+                                                                    Console.WriteLine("Update is sucsess!!");
+                                                                    UserMenu.WatingforContinue();
+                                                                }
+                                                                else
+                                                                {
+                                                                    Console.WriteLine("The ID not found!! ");
+                                                                    UserMenu.WatingforContinue();
+                                                                }
+                                                                break;
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.Clear();
+                                                                Console.WriteLine("number isn't valid!\n");
+                                                                Console.WriteLine("Enter valid id number:");
+                                                            }
+
+                                                        }
+
                                                     }
-                                                    else { Console.WriteLine("you cant enter date bigest today"); }
-                                                    
+                                                    else
+                                                    {
+                                                        throw new NullFileError();
+                                                    }
                                                 }
-                                                else
+                                                catch (Exception ex)
                                                 {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
+                                                    Console.WriteLine(ex.Message);
                                                 }
 
                                             }
-                                            Console.WriteLine("Enter Role of user \n1 = admin\t 2 = user :");
-                                            while (true)
+                                            else if (UserFancNum == 5)
                                             {
-                                                int role;
-                                                if (int.TryParse(Console.ReadLine(), out role) && (role == 1 || role == 2))
-                                                {
-                                                    adduser.RoleId = role;
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Enter true Role Id (1 = admin\t 2 = user):");
-                                                }
-                                            }
-                                            if (userservice.AddUser(adduser))
-                                            {
-                                                Console.WriteLine("add user id sucsess!!");
-                                                UserMenu.WatingforContinue();
+                                                break;
                                             }
                                             else
                                             {
-                                                Console.WriteLine("The email is duplicate!! ");
+                                                Console.WriteLine("the function id invalid");
                                                 UserMenu.WatingforContinue();
                                             }
-
-
-                                        }
-                                        else if (UserFancNum == 3)
-                                        {
-                                            try
-                                            {
-                                                List<Users> users = userservice.GetAllUser();
-                                                if (users != null)
-                                                {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Enter id to delete user:");
-                                                    foreach (Users user1 in users)
-                                                    {
-                                                        Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
-                                                    }
-                                                    while (true)
-                                                    {
-                                                        int deletId;
-                                                        if (int.TryParse(Console.ReadLine(), out deletId))
-                                                        {
-                                                            if (userservice.DeleteUser(deletId))
-                                                            {
-                                                                Console.Clear();
-                                                                Console.WriteLine("Delete is sucsessfull");
-                                                            }
-
-                                                            else
-                                                            {
-                                                                Console.WriteLine("ID not found!");
-                                                            }
-                                                            UserMenu.WatingforContinue();
-                                                            break;
-                                                            
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.Clear();
-                                                            Console.WriteLine("number isn't valid!\n");
-                                                            Console.WriteLine("Enter valid number:");
-                                                        }
-
-                                                    }
-
-                                                }
-                                                else
-                                                {
-                                                    throw new NullFileError();
-                                                }
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine(ex.Message); 
-                                            }
-                                        }
-                                        else if (UserFancNum == 4)
-                                        {
-                                            List<Users> users = userservice.GetAllUser();
-                                            Users updateuser = new Users();
-                                            try
-                                            {
-                                                if (users != null)
-                                                {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Enter ID to update user:");
-                                                    foreach (Users user1 in users)
-                                                    {
-                                                        Console.WriteLine($"ID: {user1.Id}\t Name:{user1.Name}\t LastName:{user1.Lastname}\t Email:{user1.Email}\t ");
-                                                    }
-                                                    while (true)
-                                                    {
-                                                        int updatetId;
-                                                        if (int.TryParse(Console.ReadLine(), out updatetId))
-                                                        {
-                                                            updateuser.Id = updatetId;
-                                                            Console.Clear();
-                                                            Console.WriteLine("Enter Email of user");
-                                                            updateuser.Email = Console.ReadLine();
-                                                            Console.WriteLine("Enter Name of user");
-                                                            updateuser.Name = Console.ReadLine();
-                                                            Console.WriteLine("Enter LastName of user");
-                                                            updateuser.Lastname = Console.ReadLine();
-                                                            Console.WriteLine("Enter password of user");
-                                                            updateuser.Password = Console.ReadLine();
-                                                            Console.WriteLine("Enter Mobile of user");
-                                                            updateuser.Mobile = Console.ReadLine();
-                                                            Console.WriteLine("Enter berth Day of user like this ( 2003/2/13 ):");
-                                                            while (true)
-                                                            {
-                                                                string brithdate = Console.ReadLine();
-                                                                if (Validations.CheckDateTime(brithdate))
-                                                                {
-                                                                    if (DateTime.Parse(brithdate) < DateTime.Now)
-                                                                    {
-                                                                        updateuser.BirthDate = DateTime.Parse(brithdate);
-                                                                        break;
-                                                                    }
-                                                                    else { Console.WriteLine("you cant enter date bigest today"); }
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.Clear();
-                                                                    Console.WriteLine("Enter true berth date like this 2003/2/13 or this 2003-2-13:");
-                                                                }
-
-                                                            }
-                                                            Console.WriteLine("Enter Role of user \n1 = admin\t 2 = user :");
-                                                            while (true)
-                                                            {
-                                                                int role;
-                                                                if (int.TryParse(Console.ReadLine(), out role) && (role == 1 || role == 2))
-                                                                {
-                                                                    updateuser.RoleId = role;
-                                                                    break;
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.Clear();
-                                                                    Console.WriteLine("Enter true Role Id (1 = admin\t 2 = user):");
-                                                                }
-                                                            }
-                                                            if (userservice.UpdateUser(updateuser))
-                                                            {
-                                                                Console.WriteLine("Update is sucsess!!");
-                                                                UserMenu.WatingforContinue();
-                                                            }
-                                                            else
-                                                            {
-                                                                Console.WriteLine("The ID not found!! ");
-                                                                UserMenu.WatingforContinue();
-                                                            }
-                                                            break;
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.Clear();
-                                                            Console.WriteLine("number isn't valid!\n");
-                                                            Console.WriteLine("Enter valid id number:");
-                                                        }
-
-                                                    }
-
-                                                }
-                                                else
-                                                {
-                                                    throw new NullFileError();
-                                                }
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine(ex.Message);
-                                            }
-
-                                        }
-                                        else if (UserFancNum == 5)
-                                        {
-                                            break;
                                         }
                                         else
                                         {
@@ -290,40 +298,39 @@ namespace HW4
                                             UserMenu.WatingforContinue();
                                         }
                                     }
-                                    else
-                                    {
-                                        Console.WriteLine("the function id invalid");
-                                        UserMenu.WatingforContinue();
-                                    }
+                                }
+                                else
+                                {
+                                    throw new LoginError();
                                 }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                throw new LoginError();
+                                Console.WriteLine(ex.Message);
                             }
                         }
-                        catch (Exception ex)
+
+                        if (LoginN == 2)
                         {
-                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("this function is not in homework ..");
+                            Console.WriteLine("we add this comming soon..");
+                            UserMenu.WatingforContinue();
+                        }
+                        else
+                        {
+                            throw new LoginError();
                         }
                     }
-
-                    if (LoginN == 2)
-                    {
-                        Console.WriteLine("this function is not in homework ..");
-                        Console.WriteLine("we add this comming soon..");
+                    catch(Exception ex) 
+                    { 
+                        Console.WriteLine(ex.Message);
                     }
-                    else
-                    {
-                        //erorr login 
-                    }
-
 
 
 
                 }
 
-                Console.ReadKey();
+                UserMenu.WatingforContinue();
             }
         }
     }
